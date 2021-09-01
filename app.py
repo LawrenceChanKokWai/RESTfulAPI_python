@@ -1,6 +1,6 @@
 from os import name
 from typing import ItemsView
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)   #created Flask using a unique name
 
@@ -21,7 +21,7 @@ stores = [
         'items': [
             {
                 'name': 'IPhone X',
-                'price': 560.60
+                'price': 560.65
             }
         ]
     }
@@ -38,10 +38,13 @@ def create_store():
 def get_store(name):
     pass
 
-# GET /store
+# GET /store: http://127.0.0.1:5000/store
+# jsonify converts the list into a JSON.
+# Above stores is defined as a list. JSON requires a dictionary.
+#Solution: converting the stores list 'stores' as a key, that holds list of stores {'stores': stores}
 @app.route('/store')    #By default, methods are GET
 def get_stores():
-    pass
+    return jsonify({'stores': stores})  #
 
 # POST /store/<string:name>/item {name: , price: }
 @app.route('/store/<string:name>/item', methods=['POST'])
